@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Help your grief ministry support families between sessions. A private remembrance space with voice notes, milestone reminders, and gentle prompts. Free pilot program for 5 grief groups.">
+    <title>Private Living Memorial - Free Pilot for Grief Ministries</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4A7C91;
+            --primary-dark: #3D5A6F;
+            --accent: #8B7355;
+            --background: #FAFAF8;
+            --surface: #FFFFFF;
+            --text-primary: #2A2A2A;
+            --text-secondary: #6A6A6A;
+            --text-light: #8A8A8A;
+            --border: #E8E6E1;
+            --success: #5A8F73;
+            --error: #C74444;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        .serif {
+            font-family: 'Crimson Text', Georgia, serif;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-narrow {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 248, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .logo-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .cta-button-small {
+            padding: 10px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button-small:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            right: -10%;
+            height: 100%;
+            background: radial-gradient(ellipse at top, rgba(74, 124, 145, 0.08) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(74, 124, 145, 0.1);
+            border: 1px solid rgba(74, 124, 145, 0.2);
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 32px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .hero-subheadline {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .cta-button-large {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(74, 124, 145, 0.3);
+        }
+
+        .cta-button-large:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(74, 124, 145, 0.4);
+        }
+
+        .trust-line {
+            margin-top: 32px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Problem Section */
+        .problem {
+            background: white;
+        }
+
+        .problem h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .problem-intro {
+            font-size: 20px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .problem-card {
+            padding: 32px;
+            background: var(--background);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .problem-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .problem-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Solution Section */
+        .solution {
+            background: linear-gradient(135deg, #F5F9FB 0%, #EBF2F7 100%);
+        }
+
+        .solution h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .solution-intro {
+            font-size: 20px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature {
+            display: flex;
+            gap: 20px;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .feature-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: white;
+        }
+
+        .how-it-works h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 60px auto 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 40px;
+            bottom: 40px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .timeline-number {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            padding-top: 8px;
+        }
+
+        .timeline-content h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* What You Get */
+        .what-you-get {
+            background: var(--background);
+        }
+
+        .what-you-get h2 {
+            font-size: 48px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .benefit-card {
+            padding: 32px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .check-icon {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        .benefit-text h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .benefit-text p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* Application Form */
+        .application {
+            background: white;
+            padding: 120px 0;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--background);
+            padding: 48px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .form-container h2 {
+            font-size: 40px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .required {
+            color: var(--primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(74, 124, 145, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(74, 124, 145, 0.3);
+        }
+
+        .submit-button:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 124, 145, 0.4);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-note {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 48px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+        }
+
+        .success-message h3 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .success-message p {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* FAQ */
+        .faq {
+            background: var(--background);
+        }
+
+        .faq h2 {
+            font-size: 48px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 24px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 24px 24px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-subheadline {
+                font-size: 18px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .problem-grid,
+            .features-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 32px 24px;
+            }
+
+            h2 {
+                font-size: 32px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🕊️</span>
+                    <span class="logo-text">Memorial Space</span>
+                </a>
+                <a href="#apply" class="cta-button-small">Apply for Pilot</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container-narrow">
+            <div class="hero-content">
+                <div class="hero-badge fade-in-up">
+                    <span>🎯</span>
+                    <span>Free Pilot Program • 5 Spots Available</span>
+                </div>
+                
+                <h1 class="fade-in-up delay-1">
+                    Help Your Grief Ministry Support Families Between Sessions
+                </h1>
+                
+                <p class="hero-subheadline fade-in-up delay-2">
+                    A private remembrance space where families can record voice notes, share memories, and receive gentle reminders at milestones.
+                </p>
+                
+                <a href="#apply" class="cta-button-large fade-in-up delay-3">
+                    Apply for Free Pilot
+                </a>
+                
+                <p class="trust-line fade-in-up delay-4">
+                    🔒 Private by default • 4-week pilot • Zero cost
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2>Your Families Need Ongoing Support</h2>
+            <p class="problem-intro">
+                Grief doesn't follow a schedule. It spikes at birthdays, anniversaries, and unexpected moments.
+            </p>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">📱</div>
+                    <h3>Too Public</h3>
+                    <p>Social media and memorial websites feel performative and lack privacy</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🤯</div>
+                    <h3>Too Complicated</h3>
+                    <p>Generic tools aren't designed for grief—they overwhelm when people need simplicity</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📅</div>
+                    <h3>Weekly Isn't Enough</h3>
+                    <p>Group sessions help, but families need support in the moments between meetings</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2>A Private Memory Space Families Can Return To</h2>
+            <p class="solution-intro">
+                We've built a remembrance platform specifically for grief ministries and therapy groups
+            </p>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🎤</div>
+                    <div class="feature-content">
+                        <h3>Voice-First Recording</h3>
+                        <p>Speaking is often easier than writing when grieving. Families can record messages to their loved ones in moments of need.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-content">
+                        <h3>Private by Default</h3>
+                        <p>No social media pressure. Families control who sees what, when. Everything is private unless they choose to share.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📅</div>
+                    <div class="feature-content">
+                        <h3>Milestone Reminders</h3>
+                        <p>Gentle prompts at birthdays, anniversaries, and holidays—when grief typically spikes.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-content">
+                        <h3>Invite Family</h3>
+                        <p>Families can invite others to contribute memories, creating a shared but private space.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>Simple 4-Week Pilot Program</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3>Their Story</h3>
+                        <p>Families create a private space and share photos and first memories</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3>What I Miss</h3>
+                        <p>Gentle prompts help them reflect on what their loved one meant to them</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3>Rituals</h3>
+                        <p>Share the small things that help them feel close—songs, places, traditions</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3>Legacy</h3>
+                        <p>What do they want others to remember? What stories matter most?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Get -->
+    <section class="what-you-get">
+        <div class="container">
+            <h2>Everything Included—At No Cost</h2>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="check-icon">✓</div>
+                    <div class="benefit-text">
+                        <h3>Full Platform Access</h3>
+                        <p>For your entire group (10-30 participants)</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="check-icon">✓</div>
+                    <div class="benefit-text">
+                        <h3>Complete Setup & Onboarding</h3>
+                        <p>We handle all technical details</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="check-icon">✓</div>
+                    <div class="benefit-text">
+                        <h3>Weekly Check-In Support</h3>
+                        <p>Direct line to our team throughout the pilot</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="check-icon">✓</div>
+                    <div class="benefit-text">
+                        <h3>Early Feature Input</h3>
+                        <p>Help shape what we build next</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px; text-align: center;">
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 8px;">
+                    <strong>Time Commitment:</strong>
+                </p>
+                <p style="color: var(--text-secondary);">
+                    Leaders: ~30 minutes setup + 15 min/week | Participants: 5-10 min/week (optional)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="application" id="apply">
+        <div class="container">
+            <div class="form-container">
+                <div id="form-content">
+                    <h2>Apply for a Free Pilot Spot</h2>
+                    <p class="form-subtitle">
+                        We're accepting 5 grief ministries for our first cohort
+                    </p>
+
+                    <form id="pilot-application">
+                        <div class="form-group">
+                            <label for="name">Your Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="first_name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Your Role <span class="required">*</span></label>
+                            <select id="role" name="role" required>
+                                <option value="">Select your role</option>
+                                <option value="ministry-leader">Ministry Leader</option>
+                                <option value="therapist">Therapist/Counselor</option>
+                                <option value="pastor">Pastor/Clergy</option>
+                                <option value="facilitator">Group Facilitator</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="organization">Organization/Church Name <span class="required">*</span></label>
+                            <input type="text" id="organization" name="organization" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone (optional)</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="group-size">Approximate Group Size <span class="required">*</span></label>
+                            <select id="group-size" name="group_size" required>
+                                <option value="">Select size</option>
+                                <option value="5-10">5-10 people</option>
+                                <option value="10-20">10-20 people</option>
+                                <option value="20-30">20-30 people</option>
+                                <option value="30+">30+ people</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="meeting-frequency">When does your group meet? <span class="required">*</span></label>
+                            <select id="meeting-frequency" name="meeting_frequency" required>
+                                <option value="">Select frequency</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="bi-weekly">Bi-weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="challenge">What's your biggest challenge in supporting families between sessions? <span class="required">*</span></label>
+                            <textarea id="challenge" name="challenge" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-button" id="submit-btn">
+                            Submit Application
+                        </button>
+
+                        <div class="error-message" id="error-message">
+                            Something went wrong. Please try again or email us directly at hello@memorialspace.com
+                        </div>
+
+                        <p class="form-note">
+                            We'll review your application and schedule a 20-minute intro call within 2 business days.
+                        </p>
+                    </form>
+                </div>
+
+                <div id="success-message" class="success-message">
+                    <div class="success-icon">✓</div>
+                    <h3>Application Received!</h3>
+                    <p>Thank you for applying. We'll review your application and reach out within 2 business days to schedule a quick intro call.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What does "private by default" mean?</span>
+                        <span class="faq-icon">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            When families create a memory space, only they can see it unless they explicitly invite others. There's no public directory, no search function, no social media sharing unless they choose it.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What if participants aren't tech-savvy?</span>
+                        <span class="faq-icon">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            The platform is designed for simplicity—most families can create a space and record their first voice note in under 2 minutes. We also provide step-by-step guides and support.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What happens after the 4-week pilot?</span>
+                        <span class="faq-icon">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We'll have a debrief call to discuss what worked and what didn't. If your group wants to continue, we'll discuss pricing (which will be heavily discounted for pilot partners).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is this replacing our grief group?</span>
+                        <span class="faq-icon">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Not at all. This is a tool to support families between your sessions—when they're at home and grief hits unexpectedly.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What kind of time commitment is required?</span>
+                        <span class="faq-icon">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            For leaders: About 30 minutes for initial setup and 15 minutes per week to check in with your group. For participants: As little or as much as they want—it's completely self-directed.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can families use this for multiple loved ones?</span>
+                        <span class="faq-icon">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes—they can create separate spaces for different people they've lost.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Memorial Space. All rights reserved.</p>
+            <p>
+                <a href="mailto:pilot@anamoria.ai">pilot@anamoria.ai</a> • 
+                <a href="#">Privacy Policy</a> • 
+                <a href="#">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // KIT.COM CONFIGURATION
+        // ========================================
+        // TODO: Replace these with your actual Kit credentials
+        const KIT_CONFIG = {
+            FORM_ID: '0ff69ff605',  // Get this from Kit form settings
+            API_KEY: 'h2sRF4vMQj4WgCsmUKWDNw'  // Use PUBLIC key (safe for frontend)
+        };
+
+        // ========================================
+        // FAQ ACCORDION
+        // ========================================
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.closest('.faq-item');
+                const isActive = item.classList.contains('active');
+                
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                
+                // Open clicked if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // ========================================
+        // FORM SUBMISSION TO KIT.COM
+        // ========================================
+        document.getElementById('pilot-application').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const errorMsg = document.getElementById('error-message');
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            errorMsg.classList.remove('show');
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = {
+                email: formData.get('email'),
+                first_name: formData.get('first_name'),
+                fields: {
+                    role: formData.get('role'),
+                    organization: formData.get('organization'),
+                    phone: formData.get('phone') || '',
+                    group_size: formData.get('group_size'),
+                    meeting_frequency: formData.get('meeting_frequency'),
+                    challenge: formData.get('challenge')
+                }
+            };
+            
+            try {
+                // Submit to Kit
+                const response = await fetch(`https://api.convertkit.com/v3/forms/${KIT_CONFIG.FORM_ID}/subscribe`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        api_key: KIT_CONFIG.API_KEY,
+                        ...data
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Submission failed');
+                }
+                
+                // Success!
+                document.getElementById('form-content').style.display = 'none';
+                document.getElementById('success-message').classList.add('show');
+                
+                // Optional: Track with analytics
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_submission', {
+                        'event_category': 'pilot_application',
+                        'event_label': 'success'
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Submission error:', error);
+                errorMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
+                
+                // Optional: Track error
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_submission', {
+                        'event_category': 'pilot_application',
+                        'event_label': 'error'
+                    });
+                }
+            }
+        });
+
+        // ========================================
+        // SMOOTH SCROLL FOR CTA BUTTONS
+        // ========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
